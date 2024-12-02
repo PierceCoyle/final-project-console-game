@@ -43,7 +43,7 @@ implemented in `GameState.java`.
 items in as Items.
    - Add and implement actions for all the items. All actions should modify GameState.
 5. Add a new subclass of items and at least three corresponding entries in `items.yaml`.
-5. Implement two new tests in `Game/src/test/java/GameTest.java`.
+6. Implement two new tests in `Game/src/test/java/GameTest.java`.
 
 ## Extra Credit Opportunities
 
