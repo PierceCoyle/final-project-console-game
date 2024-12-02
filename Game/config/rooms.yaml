@@ -1,8 +1,51 @@
-"Starting Room":
-  contents: [poison frog]
+"Starting Room": # Starting room
+  contents: []
   doors:
-      green: "Closet"
-"Closet":
-  contents: [broom, mop, bucket, poster]
+      green: "Room 1"
+"Room 1": # Generic room
+  contents: []
   doors:
       green: "Starting Room"
+      red: "Room 2"
+      yellow: "Locked Room 4"
+"Room 2": # Math room
+  contents: [book]
+  doors:
+      blue: "Room 1"
+      cyan: "Room 3"
+"Room 3": # Computer room
+  contents: [crowbar]
+  doors:
+      red: "Room 2"
+"Locked Room 4": # Generic Room
+  contents: []
+  doors:
+      blue: "Room 1"
+      white: "Room 5"
+"Room 5": # Biology Room
+  contents: []
+  doors:
+      yellow: "Room 4"
+      purple: "Room 6"
+      orange: "Room 7"
+"Room 6": # Robotics Room
+  contents: []
+  doors:
+      white: "Room 5"
+      violet: "Room 8"
+"Room 7": # unk
+  contents: []
+  doors:
+      white: "Room 5"
+      violet: "Room 8"
+"Room 8": # unk
+  contents: []
+  doors:
+      purple: "Room 6"
+      orange: "Room 7"
+      black: "Final Room 9"
+"Final Room 9": # Final Room
+  contents: []
+  doors:
+      violet: "Room 8"
+      

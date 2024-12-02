@@ -14,11 +14,11 @@ poison frog:
       action: "drop"
   min-damage: 2
   max-damage: 4
-broom:
+crowbar:
   type: [Item]
-  description: "It's for sweeping."
+  description: "This could be useful."
   use:
-      text: "The floor looks slightly less dusty."
+      text: "Test"
       action: "null"
 bucket:
   type: [Item]
@@ -40,7 +40,7 @@ poster:
       action: "null"
 book:
   type: [Item]
-  description: "An old book about Java. It seems to have some purple residue on it."
+  description: "A dusty old book titled \"A final proof of the Riemann Hypothesis\""
   use:
-      text: "You place the book gently on the floor."
+      text: "Who even likes math anyways."
       action: "drop"

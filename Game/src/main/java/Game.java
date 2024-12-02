@@ -31,6 +31,7 @@ public class Game {
         name = myObj.nextLine();
         // init game state
         GameState state = new GameState(name);
+        state.isBoarded = true;
 
         // beginning flavor text
         /**
@@ -64,8 +65,17 @@ public class Game {
                 case 2:
                     printSlow("Which door?");
                     String door = myObj.nextLine();
+
                     try {
                         String rtemp = state.room.doors.get(door);
+                        if (rtemp == null) {
+                            System.out.println("room is currently" + state.room.name);
+                            throw new Exception("door does not exist");
+                        }
+                        if (door.equals("yellow") && state.isBoarded == true) {
+                            printSlow("This door is boarded up...");
+                            break;
+                        }
                         state.room = state.rooms.get(rtemp);
                         printSlow("You step through the " + door + " door. You realize this room is the " + state.room.name + ".");
                     } catch (Exception e) {
@@ -96,6 +106,12 @@ public class Game {
                         Item item = state.items.get(itemp);
                         if (state.inventory.contains(item)) {
                             item.use();
+                            if (itemp.equals("crowbar") && state.room.name.equals("Room 1")) { // Skip item usage in case of unlocking door
+                                state.inventory.remove(item);
+                                state.room.contents.add(item);
+                                //state.rooms.put(state.room.name, state.room);
+                                break;
+                            }
                             printSlow(item.use);
                             if (item.action.equals("drop")) {
                                 state.inventory.remove(item);
@@ -118,5 +134,64 @@ public class Game {
             printSlow(update);
         }
         printSlow("You win!");
+    }
+
+    public static void gameConsole(GameState state, Scanner myObj) throws Exception {
+        ArrayList<String> files = new ArrayList<>(7); //List of files 
+        files.add("Game.java");
+        files.add("GameState.java");
+        files.add("Room.java");
+        files.add("Item.java");
+        files.add("Weapon.java");
+        files.add("Animal.java");
+        files.add("LoadYAML.java");
+        files.add("Monster.java");
+
+        boolean inConsole = true;
+        while (inConsole) {
+            System.out.println("You are in the console");
+            System.out.println("What do you want to do next?");
+            System.out.println("[1]: View files.");
+            System.out.println("[2]: Delete a file.");
+            System.out.println("[3]: Exit.");
+
+            choice = myObj.nextInt();
+            myObj.nextLine(); // consume newline from above
+
+            switch (choice) {
+                case 1:
+                    for (String s : files) {
+                        printSlow(s);
+                    }
+                    break;
+                case 2:
+                    String fileChoice = myObj.nextLine();
+                    if (files.contains(fileChoice) && fileChoice.equals("Monster.java")) {
+                        state.isAIDeleted = true;
+                        files.remove(fileChoice);
+                    } else if (files.contains(fileChoice)) {
+                        Exception exception = new Exception("ERROR CANNOT FIND " + fileChoice);
+                        throw exception;
+                    }
+                    break;
+                case 3: 
+                    inConsole = false;
+                    break;
+                default:
+                    printSlow("Unidentified input, try again?");
+            }
+        }
+    }
+
+    public static void aiMove(GameState state) {
+        if (state.isAIDeleted == true) {
+            return;
+        }
+        //Perform graph search
+        //Store array list with rooms between player and ai
+        //Remove from array list each time player moves towards ai or ai gets a turn
+        //Use Deque to remove from front/back depending
+        //if arraylist is empty then player has been caught
+        state.aiTracker.poll();
     }
 }
