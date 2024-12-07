@@ -2,7 +2,26 @@
   contents: [poison frog]
   doors:
       green: "Closet"
+      blue: "Test"
 "Closet":
   contents: [broom, mop, bucket, poster]
   doors:
       green: "Starting Room"
+"Test":
+  contents: [broom, mop, bucket, poster]
+  doors:
+      green: "Starting Room"
+"Test":
+  contents: [broom, mop, bucket, poster]
+  doors:
+      green: "Starting Room"
+"Test":
+  contents: [broom, mop, bucket, poster]
+  doors:
+      green: "Starting Room"
+"Test":
+  contents: [broom, mop, bucket, poster]
+  doors:
+      green: "Starting Room"
+
+      

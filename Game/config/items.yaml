@@ -1,13 +1,13 @@
-excalibur:
+hammer:
   type: [Weapon]
-  description: "Ye sword of olde"
+  description: "A rusty old hammer"
   use:
-      text: "You slash with the sword."
-      action: "null"
+      text: "You swing the hammer over your head"
+      action: "Attack"
   min-damage: 1
   max-damage: 10
-poison frog:
-  type: [Weapon, Animal]
+glowing slug:
+  type: [Animal]
   description: "A bright purple frog, oozing a thick liquid"
   use:
       text: "You place the frog gently on the floor. The frog croaks contentedly."

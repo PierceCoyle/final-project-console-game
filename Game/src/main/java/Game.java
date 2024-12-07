@@ -50,9 +50,13 @@ public class Game {
             System.out.println("[3]: Pick up an object from the room.");
             System.out.println("[4]: Examine my inventory.");
             System.out.println("[5]: Use an object from my inventory.");
+            //If in console room
+            System.out.println("[6]:");
 
             choice = myObj.nextInt();
             myObj.nextLine(); // consume newline from above
+
+            //maybe if choice = 6 and in console room, then call console menu
 
             switch (choice) {
                 case 1:
@@ -120,3 +124,12 @@ public class Game {
         printSlow("You win!");
     }
 }
+
+/*
+ * Need to add one item for each pre-implemented class
+ * Need to add 3 items for a new sub class
+ * Need to implement ai graph search and management
+ * Need to implement death
+ * Need to implement two new tests
+ * 
+ */
