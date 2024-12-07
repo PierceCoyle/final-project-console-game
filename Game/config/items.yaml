@@ -1,37 +1,37 @@
-excalibur:
+hammer:
   type: [Weapon]
-  description: "Ye sword of olde"
+  description: "A rusty old hammer"
   use:
-      text: "You slash with the sword."
-      action: "null"
+      text: "You swing the hammer over your head"
+      action: "Attack"
   min-damage: 1
   max-damage: 10
-poison frog:
-  type: [Weapon, Animal]
+glowing slug:
+  type: [Animal]
   description: "A bright purple frog, oozing a thick liquid"
   use:
       text: "You place the frog gently on the floor. The frog croaks contentedly."
-      action: "drop"
-  min-damage: 2
-  max-damage: 4
+      action: "Attack"
+  min-damage: 0
+  max-damage: 1
 crowbar:
-  type: [Item]
+  type: [Key]
   description: "This could be useful."
   use:
-      text: "Test"
-      action: "null"
-bucket:
-  type: [Item]
-  description: "It's empty."
+      text: "You use the crowbar to pry open the yellow door, you hear a creaking sound in the distance..."
+      action: "Unlock"
+plant:
+  type: [Plant]
+  description: "A small plant"
   use:
-      text: "You put the bucket on your head. You feel marginally safer."
-      action: "null"
-mop:
-  type: [Item]
-  description: "It's for mopping."
+      text: "A small potted plant, it makes you happy."
+      action: "Inspect"
+healing:
+  type: [Healing]
+  description: "A bandage soaked in  floral liquid"
   use:
-      text: "The floor looks slightly more damp."
-      action: "null"
+      text: "You wrap your wounds with the bandage, you feel better!"
+      action: "Heal"
 poster:
   type: [Item]
   description: "A classic."

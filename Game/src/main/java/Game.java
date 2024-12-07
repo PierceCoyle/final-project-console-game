@@ -52,9 +52,13 @@ public class Game {
             System.out.println("[4]: Examine my inventory.");
             System.out.println("[5]: Use an object from my inventory.");
 
+            //If in console room
+            System.out.println("[6]:");
+
             choice = myObj.nextInt();
             myObj.nextLine(); // consume newline from above
 
+            //maybe if choice = 6 and in console room, then call console menu
             switch (choice) {
                 case 1:
                     printSlow("You can see the following items:");
@@ -69,7 +73,7 @@ public class Game {
                     try {
                         String rtemp = state.room.doors.get(door);
                         if (rtemp == null) {
-                            System.out.println("room is currently" + state.room.name);
+                            System.out.println("room is currently" + state.room.name); //temp maybe
                             throw new Exception("door does not exist");
                         }
                         if (door.equals("yellow") && state.isBoarded == true) {
@@ -106,6 +110,7 @@ public class Game {
                         Item item = state.items.get(itemp);
                         if (state.inventory.contains(item)) {
                             item.use();
+                            //maybe change logic to check item type here, if its a key then use the key logic.
                             if (itemp.equals("crowbar") && state.room.name.equals("Room 1")) { // Skip item usage in case of unlocking door
                                 state.inventory.remove(item);
                                 state.room.contents.add(item);
@@ -195,3 +200,11 @@ public class Game {
         state.aiTracker.poll();
     }
 }
+/*
+ * Need to add one item for each pre-implemented class
+ * Need to add 3 items for a new sub class
+ * Need to implement ai graph search and management
+ * Need to implement death
+ * Need to implement two new tests
+ * A poor innocent slug, How could you!
+ */

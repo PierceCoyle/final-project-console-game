@@ -2,21 +2,20 @@ import java.util.Random;
 import java.util.List;
 
 public class Animal extends Item {
-    int min;
-    int max;
+    public int health;
+    public boolean isAlive;
     private Random rn;
 
     public Animal(String name, List<String> type, String desc, String use, String act, int min_damage, int max_damage) {
         super(name, type, desc, use, act);
-        min = min_damage;
-        max = max_damage;
-        rn = new Random();
+        isAlive = true;
+        health = rn.nextInt(2)+1;
     }
 
     // uniformly distributed random number
-    public int attack() {
-        int var = min + rn.nextInt((max-min) + 1);
-        return var;
-    }
+    public void recieveAttack(int damage) {
+        health -= damage;
+        health = 0 ? System.out.printline("this slug has been squashed") : System.out.println("You hit the slug! it seems to be moving slower..."); return;
 
+    }
 }
