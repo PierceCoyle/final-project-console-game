@@ -6,15 +6,13 @@ public class Healing extends Item {
     int max;
     private Random rn;
 
-    public Healing(String name, List<String> types, String desc, String use, String act, int min_damage, int max_damage) {
-        super(name, types, desc, use, act);
-        min = min_damage;
-        max = max_damage;
+    public Healing(String name, String type, String desc, String use, String act) {
+        super(name, type, desc, use, act);
         rn = new Random();
     }
 
     // uniformly distributed random number
-    public int attack() {
+    public int heal() {
         int var = min + rn.nextInt((max-min) + 1);
         return var;
     }

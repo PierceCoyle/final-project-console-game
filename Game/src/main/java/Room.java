@@ -9,8 +9,10 @@ public class Room {
     public String name;
     public List<Item> contents;
     public Map<String,String> doors;
+    public boolean locked;
 
-    public Room(String name, List<Item> contents, Map<String, String> doors) {
+    public Room(String name, List<Item> contents, Map<String, String> doors, boolean locked) {
+        this.locked = locked;
         this.name = name;
         this.contents = contents;
         this.doors = doors;
@@ -18,5 +20,9 @@ public class Room {
 
     public String toString() {
         return name;
+    }
+
+    public void unlock() {
+        this.locked = false;
     }
 }

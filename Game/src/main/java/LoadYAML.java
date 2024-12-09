@@ -31,7 +31,8 @@ public class LoadYAML {
             List<String> contemps = (ArrayList) inRoom.get("contents");
             for (String it : contemps) contents.add(items.get(it));
             Map<String, String> doors = (HashMap) inRoom.get("doors");
-            rooms.put(name, new Room(name, contents, doors));
+            boolean locked = (boolean) inRoom.get("locked");
+            rooms.put(name, new Room(name, contents, doors, locked));
         }
         return rooms;
     }
@@ -45,7 +46,35 @@ public class LoadYAML {
             String usetext = (String) use.get("text");
             String useaction = (String) use.get("action");
             List<String> types = (ArrayList) properties.get("type");
-            items.put(name, new Item(name, types, desc, usetext, useaction));
+            String type = types.get(0);
+            switch (type) {
+                case "Weapon":
+                    int minW = (int) properties.get("min-damage");
+                    int maxW = (int) properties.get("max-damage");
+                    items.put(name , new Weapon(name, type, desc, usetext, useaction, minW, maxW));
+                    break;
+                case "Animal":
+                    int health = (int) properties.get("health");
+                    int food = (int) properties.get("food");
+                    items.put(name , new Animal(name, type, desc, usetext, useaction, health, food));
+                    break;
+                case "Key":
+                    String door = (String) properties.get("door");
+                    items.put(name , new Key(name, type, desc, usetext, useaction, door));
+                    break;
+                case "Healing":
+                    items.put(name , new Healing(name, type, desc, usetext, useaction));
+                    break;
+                case "Plant":
+                    items.put(name , new Plant(name, type, desc, usetext, useaction));
+                    break;
+                case "Item":
+                    items.put(name , new Item(name, type, desc, usetext, useaction));
+                    break;
+                case "Defense":
+                    items.put(name , new Defense(name, type, desc, usetext, useaction));
+                    break;
+            }
         }
         return items;
     }

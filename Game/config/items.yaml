@@ -3,35 +3,36 @@ hammer:
   description: "A rusty old hammer"
   use:
       text: "You swing the hammer over your head"
-      action: "Attack"
+      action: "swing"
   min-damage: 1
-  max-damage: 10
+  max-damage: 2
 glowing slug:
   type: [Animal]
-  description: "A bright purple frog, oozing a thick liquid"
+  description: "It seems harmless..."
   use:
-      text: "You place the frog gently on the floor. The frog croaks contentedly."
-      action: "Attack"
-  min-damage: 0
-  max-damage: 1
+      text: "Against all instincts you eat the glowing slug... you feel sick"
+      action: "eat"
+  health: 2
+  food: -10
 crowbar:
   type: [Key]
   description: "This could be useful."
   use:
-      text: "You use the crowbar to pry open the yellow door, you hear a creaking sound in the distance..."
-      action: "Unlock"
+      text: "You look around the room for something to pry open..."
+      action: "unlock"
+  door: "yellow"
 plant:
   type: [Plant]
   description: "A small plant"
   use:
       text: "A small potted plant, it makes you happy."
-      action: "Inspect"
+      action: "plant"
 healing:
   type: [Healing]
   description: "A bandage soaked in  floral liquid"
   use:
       text: "You wrap your wounds with the bandage, you feel better!"
-      action: "Heal"
+      action: "heal"
 poster:
   type: [Item]
   description: "A classic."
@@ -44,3 +45,21 @@ book:
   use:
       text: "Who even likes math anyways."
       action: "drop"
+tracker:
+  type: [Defense]
+  description: "A glowing screen with distantly nostalgic symbols"
+  use:
+      text: "You squint your eyes as you stare at the bright screen..."
+      action: "track"
+time stop:
+  type: [Defense]
+  description: "A heavy block with a big red button, maybe this will stop what's chasing you..."
+  use:
+      text: "You press the red button on the top of the device..."
+      action: "stop"
+bullhorn:
+  type: [Defense]
+  description: "A dusty old bullhorn, I wonder if this still works..."
+  use:
+      text: "You switch the bullhorn on and it makes a loud screech."
+      action: "repel"

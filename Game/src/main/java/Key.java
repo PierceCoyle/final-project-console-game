@@ -3,15 +3,15 @@ import java.util.List;
 
 public class Key extends Item {
     boolean hasBeenUsed;
+    String door;
 
 
-    public Key(String name, List<String> types, String desc, String use, String act, int min_damage, int max_damage) {
-        super(name, types, desc, use, act);
-
+    public Key(String name, String type, String desc, String use, String act, String door) {
+        super(name, type, desc, use, act);
+        this.door = door;
         hasBeenUsed = false;
     }
 
-    // uniformly distributed random number
     public void unlock() {
         hasBeenUsed = true;
     }
