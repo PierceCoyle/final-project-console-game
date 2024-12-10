@@ -64,7 +64,7 @@ public class GameState {
         LoadYAML yl = new LoadYAML();
         rooms = yl.rooms;
         items = yl.items;
-        room = rooms.get("Server Room");
+        room = rooms.get("Entrance");
         visited.put(room, true);
         itemTest();
     }
