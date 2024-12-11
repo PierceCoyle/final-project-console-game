@@ -27,7 +27,7 @@ public class Game {
         // only instantiate once
         Scanner myObj = new Scanner(System.in);
 
-        System.out.println("What is your name?");
+        printSlow("What is your name?");
         name = myObj.nextLine();
         // init game state
         GameState state = new GameState(name);
@@ -35,15 +35,19 @@ public class Game {
         boolean isMonstersTurn = false;
 
         // beginning flavor text
-        /**
+         
         printSlow("Welcome, "+name+".");
         System.out.println("");
-        printSlow("You've been studying in the library for hours and decide to take a break by walking around.");
+        printSlow("You thought the shortcut through the woods would save time...");
         System.out.println("");
-        printSlow("You go downstairs into the basement, find an archive room, and get distracted by an old book describing the first version of Java (\'The Java Tutorial\' by Mary Campione and Kathy Walrath, published in 1997).");
+        printSlow("But as you step through the brush you find yourself in an unfamiliar clearing...");
         System.out.println("");
-        printSlow("After reading for a while, you look up and notice that the room looks... different. The lighting seems a little dimmer, the room smells of cigarettes, and you could have sworn the carpet was a different pattern when you first walked into this room.");
-        */
+        printSlow("Towering before you is an old school building, its walls covered in ivy...");
+        System.out.println("");
+        printSlow("Above the door are letters you can't seem to read...");
+        System.out.println("");
+        printSlow("Although you're scared, it seems your only option is to enter...");
+        
         while (!state.finished) {
             isMonstersTurn = false;
             System.out.println("");
@@ -60,7 +64,7 @@ public class Game {
             try {
             choice = myObj.nextInt();
             } catch (Exception e) {
-                printSlow("Unknown input, try again");
+                printSlow("Invalid input. Try again.");
                 myObj.nextLine();
                 continue;
             }
@@ -76,7 +80,6 @@ public class Game {
                 case 2:
                     printSlow("Which door?");
                     String door = myObj.nextLine();
-
                     try {
                         String rtemp = state.room.doors.get(door);
                         if (rtemp == null) {
@@ -96,20 +99,25 @@ public class Game {
                 case 3:
                     printSlow("Which item?");
                     itemp = myObj.nextLine();
-                    try {
-                        if (itemp.equals("book")) {
-                            String message = """
+                    try { 
+                        Item item = state.items.get(itemp);
+                        if (state.room.contents.contains(item)) {
+                            if (itemp.equals("book")) {
+                                String message = """
                                                 You glance at the book. It's titled \"A Proof of the Riemann Hypothesis.\"
                                                 Math isn't really your thing, so you leave it behind.
-                                            """;
-                            printSlow(message);
-                            break;
+                                                """;
+                                printSlow(message);
+                                break;
+                            }
+                            state.room.contents.remove(item);
+                            state.rooms.put(state.room.name, state.room);
+                            state.inventory.add(item);
+                            printSlow("You pick up the " + item.name + ". " + item.desc + ".");
+                        } else {
+                            printSlow("There is no " + item.name + " in this room.");
                         }
-                        Item item = state.items.get(itemp);
-                        state.room.contents.remove(item);
-                        state.rooms.put(state.room.name, state.room);
-                        state.inventory.add(item);
-                        printSlow("You pick up the " + item.name + ". " + item.desc + ".");
+                        
                     } catch (Exception e) {
                         printSlow("Unknown item.");
                     }
@@ -137,7 +145,7 @@ public class Game {
                                     if (state.room.doors.containsKey(key.door)) {
                                         state.unlock(key);
                                         if (state.isAIDeleted == false) {
-                                            printSlow("Your noise seems to have awoken something... \nYou hear a growling in the distance.");
+                                            printSlow("Your noise seems to have awoken something. \nYou hear a growling in the distance...");
                                         }
                                     } else {
                                         printSlow("Theres nothing to use this item on...");
@@ -146,13 +154,14 @@ public class Game {
                                 case "heal":
                                     Healing healing = (Healing) item;
                                     state.health += healing.heal();
+                                    state.inventory.remove(item);
                                     break;
                                 case "plant":
                                     Plant plant = (Plant) item;
                                     state.happiness += plant.increaseHappiness();
                                     break;
                                 case "swing":
-                                    Weapon weapon = (Weapon) item;  
+                                    Weapon weapon = (Weapon) item;
                                     weapon.swing(state);
                                     break;
                                 case "track":
@@ -182,6 +191,7 @@ public class Game {
                                 case "eat":                
                                     Animal animal = (Animal) item; 
                                     animal.eat(state);
+                                    state.inventory.remove(item);
                                     break;
                             }
                         }
@@ -196,16 +206,15 @@ public class Game {
                         if (state.room.name.equals("Server Room")) {
                                 gameConsole(state, myObj);
                         } else {
-                            printSlow("Unidentified input, try again?");
+                            printSlow("Invalid input. Try again.");
                     }
                     break;
                 default:
-                    printSlow("Unidentified input, try again?");
+                    printSlow("Invalid input. Try again.");
             }
 
             if (state.isBoarded == false && state.isAIDeleted == false && isMonstersTurn == true) {
-                    aiMove(state);
-                
+                    state.aiMove();
             }
 
             String update = state.update();
@@ -226,6 +235,7 @@ public class Game {
         int consoleChoice;
         boolean inConsole = true;
         while (inConsole) {
+            System.out.println("");
             printSlow("You are in the console.");
             System.out.println("What do you want to do next?");
             System.out.println("[1]: View files.");
@@ -236,7 +246,7 @@ public class Game {
                 myObj.nextLine();
             } catch (Exception e) {
                 myObj.nextLine();
-                printSlow("Unidentified input, try again?");
+                printSlow("Invalid input. Try again.");
                 continue;
             }
             switch (consoleChoice) {
@@ -257,9 +267,7 @@ public class Game {
                             printSlow("Monster.java successfully deleted.");
                         } else {
                             //Fake crash
-                            //throw new RuntimeException("ERROR: Deleting " + fileChoice + " has caused a critical failure!");
-                            files.remove(fileChoice);
-                            printSlow("ERROR: Deleting " + fileChoice + " has caused a critical failure!");
+                            throw new RuntimeException("ERROR: Deleting " + fileChoice + " has caused a critical failure. What else did you expect to happen?");
                         }
                     } else {
                         printSlow("ERROR: File not found.");
@@ -272,28 +280,5 @@ public class Game {
                     printSlow("Invalid input. Try again.");
             }
         }
-    }
-    
-
-    
-    public static void aiMove(GameState state) {
-        if (state.isAIStopped) {
-            state.isAIStopped = false;
-            return;
-        }
-
-        Room aiRoom = state.aiTracker.poll();
-        if (aiRoom == state.room) {
-            System.out.println("The Monster has caught the player in " + state.room.name);
-            state.isCaught = true;
-            return;
-        }
-        Room nextRoom = state.aiTracker.peekFirst();
-
-        if (nextRoom == state.room) {
-            System.out.println("The Monster has caught the player in " + nextRoom.name);
-            state.isCaught = true;
-        }
-
     }
 }

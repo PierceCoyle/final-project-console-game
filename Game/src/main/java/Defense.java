@@ -6,14 +6,14 @@ public class Defense extends Item {
 
     public void track(GameState state) { //Rooms between monster and player
         if (state.isBoarded == false && state.isAIDeleted == false) {
-            int distance = state.aiTracker.size() - 1;
+            int distance = state.graphSearch().size() - 1;  
             Game.printSlow("It seems to tell you that the monster is " + distance + " room(s) away.");
         }
     }
 
     public void stop(GameState state) { //Stops monster for one turn
-            state.isAIStopped = true;
-            Game.printSlow("The growling seems to have stopped... for now.");
+        state.isAIStopped = true;
+        Game.printSlow("The growling seems to have stopped... for now.");
 
     }
 

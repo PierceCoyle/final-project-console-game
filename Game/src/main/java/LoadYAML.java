@@ -63,7 +63,8 @@ public class LoadYAML {
                     items.put(name , new Key(name, type, desc, usetext, useaction, door));
                     break;
                 case "Healing":
-                    items.put(name , new Healing(name, type, desc, usetext, useaction));
+                    int amount = (int) properties.get("amount");
+                    items.put(name , new Healing(name, type, desc, usetext, useaction, amount));
                     break;
                 case "Plant":
                     items.put(name , new Plant(name, type, desc, usetext, useaction));

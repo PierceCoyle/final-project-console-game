@@ -16,11 +16,11 @@ public class Weapon extends Item {
         int damage = min + rn.nextInt((max - min) + 1);
 
         boolean hit = false;
-        for (Item item : state.room.contents) {
+        for (Item item : state.room.contents) { //search room for animals to attack
             if (item.type.equals(ItemType.toType("Animal"))) {
                 Animal animal = (Animal) item;
                 hit = true;
-                int result = animal.recieveAttack(damage, state);
+                int result = animal.recieveAttack(damage, state); //returns 1 if animal dies
                 if (result == 1) {
                     state.room.contents.remove(item);
                 break;
@@ -28,7 +28,7 @@ public class Weapon extends Item {
             }
         }
         if (hit == false) {
-            System.out.println("You swing the hammer, but there's nothing to hit.");
+            Game.printSlow("It slams into the ground.");
         }
     }
 }

@@ -5,7 +5,7 @@
       green: "Entrance"
 "Entrance": # Room 1
   locked: false
-  contents: [healing]
+  contents: [bandage]
   doors:
       green: "Outside"
       red: "Math Room"
@@ -18,13 +18,13 @@
       cyan: "Chemistry Room"
 "Chemistry Room": # Room 3
   locked: false
-  contents: [tracker]
+  contents: [tracker, glowing slug]
   doors:
       cyan: "Math Room"
       blue: "Art Room"
 "Art Room": # Room 4
   locked: false
-  contents: [bullhorn]
+  contents: [poster]
   doors:
       blue: "Chemistry Room"
       magenta: "Server Room"
@@ -48,7 +48,7 @@
       orange: "Storage Room"
 "Robotics Room": # Room 8
   locked: false
-  contents: []
+  contents: [bullhorn]
   doors:
       purple: "Biology Room"
       violet: "English Room"
@@ -64,8 +64,8 @@
   doors:
       violet: "Robotics Room"
       orange: "Storage Room"
-      black: "Library"
-"Library": # Final Room 11
+      black: "Rooftop"
+"Rooftop": # Final Room 11
   locked: false
   contents: []
   doors:

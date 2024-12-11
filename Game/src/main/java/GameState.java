@@ -13,6 +13,7 @@ public class GameState {
     boolean isAIDeleted;
     boolean isAIStopped;
     boolean isCaught;
+    Room aiRoom;
     Room room;
     List<Item> inventory = new ArrayList<Item>();
     Deque<Room> aiTracker = new LinkedList<Room>();
@@ -38,18 +39,29 @@ public class GameState {
         if (room == null) {
             return "";
         } 
-        if (room.name.equals("Final Room 11")) {
+        if (room.name.equals("Rooftop")) {
             finished = true;
             String finaltext = "";
-            if (happiness < 5) {
+            if (happiness <= 3) {
                 finaltext =  """
-                                You Win sad!
-                            """;
+                    The heavy rooftop door slams shut behind you, echoing all around.
+                    You inhale the cold, stale air as you look out at the horizon.
+                    All around, you see a thick line of trees with only the unknown beyond them.
+                    Whatever this journey has come to, you just want to go home.
+
+                    You win?
+                """;
             } else {
                 finaltext =  """
-                                You Win happy!
-                            """;
+                    The heavy rooftop door slams shut behind you, echoing all around.
+                    You inhale the cold, fresh air as you look out at the horizon.
+                    Through a thin line of trees, you see your house, lit up by the warm lights of the neighborhood.
+                    You know your journey has come to an end, and it's time to go home.
+
+                    You win!
+                """;
             }
+
             return finaltext;
         } else 
         return "";
@@ -64,9 +76,9 @@ public class GameState {
         LoadYAML yl = new LoadYAML();
         rooms = yl.rooms;
         items = yl.items;
-        room = rooms.get("Entrance");
+        room = rooms.get("Outside");
         visited.put(room, true);
-        itemTest();
+        //itemTest();
     }
 
     public void unlock(Key key) {
@@ -86,59 +98,99 @@ public class GameState {
     }   
 
     public void initializeAI() {
-        Room aiRoom = rooms.get("Server Room");
-        Room playerRoom = room;
+        if (isAIDeleted == true) {
+            return;
+        }
 
-        Map<Room, Room> from = new HashMap<>();
+        aiRoom = rooms.get("Server Room");
+        aiTracker = graphSearch();
+
+    }
+
+    public void aiMove() {
+        if (isAIStopped) { //if timestop is used
+            isAIStopped = false;
+            return;
+        }
+        if (aiRoom.name.equals(room.name)) {
+            Game.printSlow("The Monster has caught the player in the " + room.name);
+            isCaught = true;
+            return;
+        }
+
+        aiTracker = graphSearch();
+        aiTracker.pollFirst(); 
+        aiRoom = aiTracker.pollFirst(); //Moves the monster one room
+
+        if (aiRoom == room) {//Capture logic
+            Game.printSlow("The Monster has caught the player in the " + room.name);
+            isCaught = true;
+        } else {
+            Game.printSlow("You hear the growling getting closer...");
+        }
+    }
+
+    public Deque<Room> graphSearch() {
+        Room start = aiRoom;  
+        Room end = room;
+    
+        Map<Room, Room> path = new HashMap<>();
         Queue<Room> queue = new LinkedList<>();
         Set<Room> visited = new HashSet<>();
-
-        queue.add(aiRoom);
-        visited.add(aiRoom);
-
-        while (!queue.isEmpty()) {
+    
+        queue.add(start);
+        visited.add(start);
+    
+        boolean foundPlayer = false;
+    
+        while (!queue.isEmpty() && foundPlayer == false) { //BFS
             Room curr = queue.poll();
-
+    
             for (String door : curr.doors.keySet()) {
                 Room neighbor = rooms.get(curr.doors.get(door));
-
-                if (neighbor != null && !visited.contains(neighbor)) {
+    
+                if (!visited.contains(neighbor)) {
                     visited.add(neighbor);
-                    from.put(neighbor, curr);
+                    path.put(neighbor, curr);
                     queue.add(neighbor);
-
-                    if (neighbor == playerRoom) {
+    
+                    if (neighbor == end) {
+                        foundPlayer = true;
                         break;
                     }
                 }
             }
         }
-
-        Deque<Room> path = new LinkedList<>();
-        Room step = playerRoom;
-
-        while (step != null && from.containsKey(step)) {
-            path.addFirst(step);
-            step = from.get(step);
+    
+        Deque<Room> pathQ = new LinkedList<>();
+        Room curr = end;
+    
+        while (curr != null && path.containsKey(curr)) { //path reconstruction
+            pathQ.addFirst(curr);
+            curr = path.get(curr);
+        }
+    
+        if (pathQ.peekFirst() != start) {
+            pathQ.addFirst(start);
         }
 
-        if (!path.isEmpty() && path.peekFirst() != aiRoom) {
-            path.addFirst(aiRoom);
-        }
-
-        aiTracker = path;
+        return pathQ;
     }
+    
+    
 
     public void itemTest() {
         inventory.add(items.get("hammer"));
         inventory.add(items.get("glowing slug"));
         inventory.add(items.get("crowbar"));
         inventory.add(items.get("plant"));
-        inventory.add(items.get("healing"));
+        inventory.add(items.get("bandage"));
         inventory.add(items.get("poster"));
         inventory.add(items.get("book"));
         inventory.add(items.get("tracker"));
         inventory.add(items.get("time stop"));
         inventory.add(items.get("bullhorn"));
     }
+
+
 }

@@ -1,5 +1,3 @@
-import java.util.List;
-
 public class Animal extends Item {
     public int health;
     public boolean isAlive;
@@ -15,7 +13,7 @@ public class Animal extends Item {
     public int recieveAttack(int damage, GameState state) {
         health -= damage;
         if (health <= 0) {
-            Game.printSlow("This " + this.name + " has been squashed");
+            Game.printSlow("This " + this.name + " has been squashed...");
             state.happiness--;
             state.room.contents.add(spawnSlug());
             Game.printSlow("A new slug crawls out from a test tube!");
@@ -36,7 +34,7 @@ public class Animal extends Item {
         return food;
     }
 
-    private Animal spawnSlug() {
+    public static Animal spawnSlug() {
         return new Animal(
             "glowing slug", 
             "Animal", 

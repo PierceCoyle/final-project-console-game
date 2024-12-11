@@ -10,7 +10,6 @@ public class Plant extends Item {
     }
 
     public int increaseHappiness() {
-        System.out.println("Looking at the plant makes you happy!");
         int var = rn.nextInt(2) + 1;
         return var;
     }

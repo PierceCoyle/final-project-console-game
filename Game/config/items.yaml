@@ -2,7 +2,7 @@ hammer:
   type: [Weapon]
   description: "A rusty old hammer"
   use:
-      text: "You swing the hammer over your head"
+      text: "You swing the hammer over your head..."
       action: "swing"
   min-damage: 1
   max-damage: 2
@@ -13,7 +13,7 @@ glowing slug:
       text: "Against all instincts you eat the glowing slug... you feel sick"
       action: "eat"
   health: 2
-  food: -10
+  food: -5
 crowbar:
   type: [Key]
   description: "This could be useful."
@@ -25,14 +25,15 @@ plant:
   type: [Plant]
   description: "A small plant"
   use:
-      text: "A small potted plant, it makes you happy."
+      text: "A small potted plant... Looking at it makes you happy!"
       action: "plant"
-healing:
+bandage:
   type: [Healing]
-  description: "A bandage soaked in  floral liquid"
+  description: "A bandage soaked in a floral liquid"
   use:
-      text: "You wrap your wounds with the bandage, you feel better!"
+      text: "You wrap your wounds with the bandage... you feel better!"
       action: "heal"
+  amount: 10
 poster:
   type: [Item]
   description: "A classic."
@@ -41,7 +42,7 @@ poster:
       action: "null"
 book:
   type: [Item]
-  description: "A dusty old book titled \"A final proof of the Riemann Hypothesis\""
+  description: "A dusty old book titled \"A proof of the Riemann Hypothesis\""
   use:
       text: "Who even likes math anyways."
       action: "drop"
