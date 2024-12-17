@@ -1,0 +1,28 @@
+two new rooms:
+  maxpoints: 10
+  points: 10
+  feedback: so many rooms, I got lost!
+new ending:
+  maxpoints: 20
+  points: 20
+  feedback: well implemented and creative
+locked door:
+  maxpoints: 15
+  points: 15
+  feedback: clever to change to crowbar, implemented well
+item subclasses:
+  maxpoints: 30
+  points: 30
+  feedback: good, well implemented
+new item subclass:
+  maxpoints: 15
+  points: 15
+  feedback: excellent and well implemented
+tests:
+  maxpoints: 10
+  points: 8
+  feedback: good basic tests, would be best to see tests of GameState or other classes
+EC:
+  maxpoints: 15
+  points: 10
+  feedback: great creative execution :)
